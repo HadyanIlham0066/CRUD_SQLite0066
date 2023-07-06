@@ -62,26 +62,32 @@ public class MainActivity extends AppCompatActivity {
                     //mhsList.add(new MhsModel(-1,isian_nama,isian_nim,isian_noHp));
 
                     boolean stts;
-                    if(!isEdit){
-                        mm = new MhsModel(-1,isian_nama, isian_nim, isian_noHp);
-                        stts = dbase.simpan(mm);
-                        edNama.setText("");
-                        edNim.setText("");
-                        edNoHp.setText("");
 
-                    }else {
-                        mm = new MhsModel(mm.getId(),isian_nama, isian_nim, isian_noHp);
-                        stts = dbase.ubah(mm);
+                    mhsList = dbase.list();
+                    if (mhsList.size()>=5){
+                        Toast.makeText(getApplicationContext(), "Maaf Data Tidak Boleh Lebih Dari 5!",Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        if (!isEdit) {
+                            mm = new MhsModel(-1, isian_nama, isian_nim, isian_noHp);
+                            stts = dbase.simpan(mm);
+                            edNama.setText("");
+                            edNim.setText("");
+                            edNoHp.setText("");
+
+                        } else {
+                            mm = new MhsModel(mm.getId(), isian_nama, isian_nim, isian_noHp);
+                            stts = dbase.ubah(mm);
+                        }
+
+                        if (stts) {
+                            Toast.makeText(getApplicationContext(), "Data Berhasil Disimpan", Toast.LENGTH_SHORT)
+                                    .show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Data Gagal Disimpan", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
                     }
-
-                    if(stts){
-                        Toast.makeText(getApplicationContext(),"Data Berhasil Disimpan", Toast.LENGTH_SHORT)
-                                .show();
-                    }else {
-                        Toast.makeText(getApplicationContext(),"Data Gagal Disimpan", Toast.LENGTH_SHORT)
-                                .show();
-                    }
-
                     //intent_list.putParcelableArrayListExtra("mhsList",mhsList);
                     //startActivity(intent_list);
                 }
